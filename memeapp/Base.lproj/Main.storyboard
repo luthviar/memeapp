@@ -43,19 +43,24 @@
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RXm-Bp-gn8">
                                 <rect key="frame" x="0.0" y="813" width="414" height="49"/>
                                 <items>
-                                    <barButtonItem width="42" style="plain" systemItem="fixedSpace" id="NRs-ZZ-CP6"/>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="bF5-qs-mTV"/>
+                                    <barButtonItem title="Fonts" width="191.5" id="sDH-hN-aA8">
+                                        <connections>
+                                            <action selector="fontsButtonAction:" destination="BYZ-38-t0r" id="Sv8-i6-Vrm"/>
+                                        </connections>
+                                    </barButtonItem>
                                     <barButtonItem title="Item" image="camera.fill" catalog="system" id="3IJ-Mf-8bw">
                                         <connections>
                                             <action selector="cameraButtonAction:" destination="BYZ-38-t0r" id="lhY-V5-FRc"/>
                                         </connections>
                                     </barButtonItem>
-                                    <barButtonItem width="42" style="plain" systemItem="fixedSpace" id="409-uq-l1G"/>
+                                    <barButtonItem width="42" style="plain" systemItem="fixedSpace" id="NRs-ZZ-CP6"/>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="bF5-qs-mTV"/>
                                     <barButtonItem title="Album" id="dAQ-GA-puB">
                                         <connections>
                                             <action selector="photoLibraryAction:" destination="BYZ-38-t0r" id="HGI-lq-9ig"/>
                                         </connections>
                                     </barButtonItem>
+                                    <barButtonItem width="42" style="plain" systemItem="fixedSpace" id="409-uq-l1G"/>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="2hF-jh-1bU"/>
                                 </items>
                             </toolbar>
@@ -89,6 +94,7 @@
                     <connections>
                         <outlet property="bottomTextField" destination="s63-2Z-FoN" id="YRh-aC-jO6"/>
                         <outlet property="cameraButton" destination="3IJ-Mf-8bw" id="Bft-23-Ete"/>
+                        <outlet property="fontsButton" destination="sDH-hN-aA8" id="A60-rV-t8U"/>
                         <outlet property="imageView" destination="0ze-GG-3mQ" id="tS9-wf-Jvi"/>
                         <outlet property="navigationBar" destination="tUD-mE-0M8" id="S3q-cq-TcL"/>
                         <outlet property="photoLibraryButton" destination="dAQ-GA-puB" id="rb1-6Y-A3Q"/>

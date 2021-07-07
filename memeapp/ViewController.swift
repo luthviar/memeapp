@@ -12,6 +12,7 @@ class ViewController: UIViewController, UINavigationControllerDelegate, UIImageP
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var cameraButton: UIBarButtonItem!
     @IBOutlet weak var photoLibraryButton: UIBarButtonItem!
+    @IBOutlet weak var fontsButton: UIBarButtonItem!
     @IBOutlet weak var topTextField: UITextField!
     @IBOutlet weak var bottomTextField: UITextField!
     @IBOutlet weak var navigationBar: UINavigationBar!
@@ -19,32 +20,51 @@ class ViewController: UIViewController, UINavigationControllerDelegate, UIImageP
     
     let DEFAULT_TOP_TEXT : String = "TOP"
     let DEFAULT_BOTTOM_TEXT : String = "BOTTOM"
+    let DEFAULT_FIELD_TEXT_SIZE: CGFloat = 40
     
-    let memeTextAttributes : [NSAttributedString.Key: Any] = [
+    
+    var memeTextAttributes : [NSAttributedString.Key: Any] = [
         NSAttributedString.Key.strokeColor : UIColor.black,
         NSAttributedString.Key.foregroundColor : UIColor.white,
-        NSAttributedString.Key.font : UIFont(name: "impact", size: 40)!,
+        NSAttributedString.Key.font : UIFont(name: "ComicSansMS", size: 40)!,
         NSAttributedString.Key.strokeWidth : -4.0
     ] as [NSAttributedString.Key : Any]
+    
+    var fontChoosed: String = "impact"
+    let availableFontsWithValue: [String:String] = [
+        "Impact" : FontNames.impact.rawValue,
+        "Times New Roman" : FontNames.timesNewRoman.rawValue,
+        "Comic Sans" : FontNames.comic.rawValue,
+        "Papyrus" : FontNames.papyrus.rawValue,
+    ]
     
     enum TextFieldPosition: Int {
         case top = 1, bottom
     }
     
+    enum FontNames: String {
+        case impact = "impact"
+        case timesNewRoman = "TimesNewRomanPSMT"
+        case comic = "ComicSansMS"
+        case papyrus = "Papyrus"
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-                
+        
         updateStyleTextField(textField: topTextField)
         updateStyleTextField(textField: bottomTextField)
         topTextField.tag = 1
         bottomTextField.tag = 2
     }
     
-    func updateStyleTextField(textField: UITextField) {
+    func updateStyleTextField(textField: UITextField, isDefault: Bool = true) {
         textField.defaultTextAttributes = memeTextAttributes
         
-        topTextField.text = DEFAULT_TOP_TEXT
-        bottomTextField.text = DEFAULT_BOTTOM_TEXT
+        if isDefault {
+            topTextField.text = DEFAULT_TOP_TEXT
+            bottomTextField.text = DEFAULT_BOTTOM_TEXT
+        }
         textField.textAlignment = .center
         textField.autocapitalizationType = .allCharacters
         textField.delegate = self
@@ -72,6 +92,25 @@ class ViewController: UIViewController, UINavigationControllerDelegate, UIImageP
     @IBAction func photoLibraryAction(_ sender: Any) {
         pickAnImageFromSource(source: .photoLibrary)
     }
+    @IBAction func fontsButtonAction(_ sender: Any) {
+        showPopUpFonts("Pilih Font", message: "Let's choose your best font for meme!")
+    }
+    
+    func showPopUpFonts(_ title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        
+        for item in availableFontsWithValue {
+            
+            alert.addAction(UIAlertAction(title: item.key, style: .default, handler: {_ in
+                self.memeTextAttributes[NSAttributedString.Key.font] = UIFont(name: item.value, size: self.DEFAULT_FIELD_TEXT_SIZE)!
+                self.updateStyleTextField(textField: self.topTextField, isDefault: false)
+                self.updateStyleTextField(textField: self.bottomTextField, isDefault: false)
+            }))
+        }
+        
+        self.present(alert, animated: true, completion: nil)
+    }
+    
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         

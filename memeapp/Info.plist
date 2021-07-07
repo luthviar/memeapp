@@ -69,6 +69,7 @@
 	<key>UIAppFonts</key>
 	<array>
 		<string>impact.ttf</string>
+		<string>COMIC.TTF</string>
 	</array>
 </dict>
 </plist>
