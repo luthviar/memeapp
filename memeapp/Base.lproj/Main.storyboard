@@ -7,10 +7,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Meme Editor View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="memeapp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="MemeEditorViewController" customModule="memeapp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -24,12 +24,12 @@
                                     <navigationItem id="BKj-QF-Yms">
                                         <barButtonItem key="leftBarButtonItem" systemItem="action" id="AkL-JB-zPr">
                                             <connections>
-                                                <action selector="shareButtonAction:" destination="BYZ-38-t0r" id="20W-lf-ShQ"/>
+                                                <action selector="barButtonAction:" destination="BYZ-38-t0r" id="2TU-DF-TYh"/>
                                             </connections>
                                         </barButtonItem>
                                         <barButtonItem key="rightBarButtonItem" systemItem="cancel" id="iE6-0B-scx">
                                             <connections>
-                                                <action selector="cancelButtonAction:" destination="BYZ-38-t0r" id="8De-6F-oRa"/>
+                                                <action selector="barButtonAction:" destination="BYZ-38-t0r" id="P80-Ep-piC"/>
                                             </connections>
                                         </barButtonItem>
                                     </navigationItem>
@@ -45,19 +45,19 @@
                                 <items>
                                     <barButtonItem title="Fonts" width="191.5" id="sDH-hN-aA8">
                                         <connections>
-                                            <action selector="fontsButtonAction:" destination="BYZ-38-t0r" id="Sv8-i6-Vrm"/>
+                                            <action selector="barButtonAction:" destination="BYZ-38-t0r" id="EhQ-x1-UMf"/>
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem title="Item" image="camera.fill" catalog="system" id="3IJ-Mf-8bw">
                                         <connections>
-                                            <action selector="cameraButtonAction:" destination="BYZ-38-t0r" id="lhY-V5-FRc"/>
+                                            <action selector="barButtonAction:" destination="BYZ-38-t0r" id="jmx-Rw-oyq"/>
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem width="42" style="plain" systemItem="fixedSpace" id="NRs-ZZ-CP6"/>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="bF5-qs-mTV"/>
                                     <barButtonItem title="Album" id="dAQ-GA-puB">
                                         <connections>
-                                            <action selector="photoLibraryAction:" destination="BYZ-38-t0r" id="HGI-lq-9ig"/>
+                                            <action selector="barButtonAction:" destination="BYZ-38-t0r" id="JND-1h-7iN"/>
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem width="42" style="plain" systemItem="fixedSpace" id="409-uq-l1G"/>
@@ -94,6 +94,7 @@
                     <connections>
                         <outlet property="bottomTextField" destination="s63-2Z-FoN" id="YRh-aC-jO6"/>
                         <outlet property="cameraButton" destination="3IJ-Mf-8bw" id="Bft-23-Ete"/>
+                        <outlet property="cancelButton" destination="iE6-0B-scx" id="LfK-ku-kHV"/>
                         <outlet property="fontsButton" destination="sDH-hN-aA8" id="A60-rV-t8U"/>
                         <outlet property="imageView" destination="0ze-GG-3mQ" id="tS9-wf-Jvi"/>
                         <outlet property="navigationBar" destination="tUD-mE-0M8" id="S3q-cq-TcL"/>

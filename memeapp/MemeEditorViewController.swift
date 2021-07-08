@@ -7,13 +7,14 @@
 
 import UIKit
 
-class ViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITextFieldDelegate {
+class MemeEditorViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITextFieldDelegate {
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var cameraButton: UIBarButtonItem!
     @IBOutlet weak var photoLibraryButton: UIBarButtonItem!
     @IBOutlet weak var fontsButton: UIBarButtonItem!
     @IBOutlet weak var shareButton: UIBarButtonItem!
+    @IBOutlet weak var cancelButton: UIBarButtonItem!
     @IBOutlet weak var topTextField: UITextField!
     @IBOutlet weak var bottomTextField: UITextField!
     @IBOutlet weak var navigationBar: UINavigationBar!
@@ -42,6 +43,10 @@ class ViewController: UIViewController, UINavigationControllerDelegate, UIImageP
     
     enum TextFieldPosition: Int {
         case top = 1, bottom
+    }
+    
+    enum BarButtonItemsTag: Int {
+        case album, camera, fonts, cancel, share
     }
     
     enum FontNames: String {
@@ -75,8 +80,16 @@ class ViewController: UIViewController, UINavigationControllerDelegate, UIImageP
     func setupUI(isDefault: Bool = true) {
         updateStyleTextField(textField: topTextField, isDefault: isDefault)
         updateStyleTextField(textField: bottomTextField, isDefault: isDefault)
+        
+        photoLibraryButton.tag = BarButtonItemsTag.album.rawValue
+        cameraButton.tag = BarButtonItemsTag.camera.rawValue
+        fontsButton.tag = BarButtonItemsTag.fonts.rawValue
+        shareButton.tag = BarButtonItemsTag.share.rawValue
+        cancelButton.tag = BarButtonItemsTag.cancel.rawValue
+        
         topTextField.tag = 1
         bottomTextField.tag = 2
+        
         shareButton.isEnabled = false
         imageView.image = DEFAULT_IMAGE
     }
@@ -114,6 +127,27 @@ class ViewController: UIViewController, UINavigationControllerDelegate, UIImageP
         }
         
         self.present(alert, animated: true, completion: nil)
+    }
+    
+    func showAlert(_ title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    func share() {
+        let memedImage = generateMemedImage()
+        let activityController = UIActivityViewController(activityItems: [memedImage], applicationActivities: nil)
+        activityController.completionWithItemsHandler = { activity, completed, items, error in
+            if (completed) {
+                self.save()
+            }
+            self.dismiss(animated: true, completion: nil)
+        }
+        
+        present(activityController, animated: true, completion: nil)
     }
     
     // MARK: IMAGE PICKER CONTROLLER
@@ -196,30 +230,22 @@ class ViewController: UIViewController, UINavigationControllerDelegate, UIImageP
     
     
     // MARK: IBACTION
-    
-    @IBAction func shareButtonAction(_ sender: Any) {
-        let memedImage = generateMemedImage()
-        let activityController = UIActivityViewController(activityItems: [memedImage], applicationActivities: nil)
-        activityController.completionWithItemsHandler = { activity, success, items, error in
-            self.save()
-            self.dismiss(animated: true, completion: nil)
-        }
-        
-        present(activityController, animated: true, completion: nil)
-    }
   
-    @IBAction func cameraButtonAction(_ sender: Any) {
-        pickAnImageFromSource(source: .camera)
-    }
-    @IBAction func photoLibraryAction(_ sender: Any) {
-        pickAnImageFromSource(source: .photoLibrary)
-    }
-    @IBAction func fontsButtonAction(_ sender: Any) {
-        showPopUpFonts("Choose Font", message: "Let's choose your best font for the meme!")
-    }
-    
-    @IBAction func cancelButtonAction(_ sender: Any) {
-        setupUI(isDefault: true)
+    @IBAction func barButtonAction(_ sender: UIBarButtonItem) {
+        switch BarButtonItemsTag(rawValue: sender.tag) {
+        case .album:
+            pickAnImageFromSource(source: .photoLibrary)
+        case .camera:
+            pickAnImageFromSource(source: .camera)
+        case .fonts:
+            showPopUpFonts("Choose Font", message: "Let's choose your best font for the meme!")
+        case .cancel:
+            setupUI(isDefault: true)
+        case .share:
+            share()
+        default:
+            showAlert("Sorry, try again.", message: "")
+        }
     }
     
     
@@ -232,8 +258,8 @@ class ViewController: UIViewController, UINavigationControllerDelegate, UIImageP
     }
     
     func subscribeToKeyboardNotifications() {
-        NotificationCenter.default.addObserver(self, selector: #selector(ViewController.keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(ViewController.keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     @objc func keyboardWillHide(_ notification:Notification) {
