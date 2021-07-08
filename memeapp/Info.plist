@@ -63,7 +63,7 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>NSCameraUsageDescription</key>
-	<string>Menggunakan kamera untuk menampilkan MEME Anda</string>
+	<string>Using your camera to create your meme image</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>Using your gallery to generate meme image</string>
 	<key>UIAppFonts</key>

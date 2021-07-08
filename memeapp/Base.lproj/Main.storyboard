@@ -98,6 +98,7 @@
                         <outlet property="imageView" destination="0ze-GG-3mQ" id="tS9-wf-Jvi"/>
                         <outlet property="navigationBar" destination="tUD-mE-0M8" id="S3q-cq-TcL"/>
                         <outlet property="photoLibraryButton" destination="dAQ-GA-puB" id="rb1-6Y-A3Q"/>
+                        <outlet property="shareButton" destination="AkL-JB-zPr" id="Pbz-qK-B5i"/>
                         <outlet property="toolBar" destination="RXm-Bp-gn8" id="SYW-KY-OsZ"/>
                         <outlet property="topTextField" destination="vvt-8r-MR6" id="cBK-Ym-04j"/>
                     </connections>
